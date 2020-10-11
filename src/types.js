@@ -1,0 +1,5 @@
+export const SEARCH_WEATHER = "SEARCH_WEATHER";
+export const GET_USER_LOCATION = "GET_USER_LOCATION";
+export const SET_LOADING = "SET_LOADING";
+export const SET_ALERT = "SET_ALERT";
+export const REMOVE_ALERT = "REMOVE_ALERT";
