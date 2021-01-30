@@ -26,32 +26,35 @@ const WeatherState = (props) => {
   const { setAlert } = alertContext;
 
   // Fetch Current Weather data from API, then use data to do a 2nd fetch
-  const searchWeatherData = useCallback(async (cityName, country) => {
-    setLoading();
-    try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${country}&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`;
-      const res = await fetch(url);
+  const searchWeatherData = useCallback(
+    async (cityName, country) => {
+      setLoading();
+      try {
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${country}&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`;
+        const res = await fetch(url);
 
-      if (res.ok) {
-        const data = await res.json();
+        if (res.ok) {
+          const data = await res.json();
 
-        const res2 = await fetch(
-          `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`
-        );
-        const data2 = await res2.json();
-        setLoading(false);
-        dispatch({
-          type: SEARCH_WEATHER,
-          payload: { data, data2 },
-        });
-      } else {
-        setAlert(res.statusText, "error");
+          const res2 = await fetch(
+            `https://api.openweathermap.org/data/2.5/onecall?lat=${data.coord.lat}&lon=${data.coord.lon}&&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`
+          );
+          const data2 = await res2.json();
+          setLoading(false);
+          dispatch({
+            type: SEARCH_WEATHER,
+            payload: { data, data2 },
+          });
+        } else {
+          setAlert((alert) => res.statusText, "error");
+        }
+      } catch (error) {
+        console.log(error);
+        setAlert(error, "error");
       }
-    } catch (error) {
-      console.log(error);
-      setAlert(error, "error");
-    }
-  }, []);
+    },
+    [setAlert]
+  );
 
   // Get location info from user
   useEffect(() => {

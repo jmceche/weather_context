@@ -49,7 +49,7 @@ const SearchWeather = () => {
     <>
       <form onSubmit={handleSubmit}>
         <Grid container direction={"row"} spacing={1}>
-          <Grid item>
+          <Grid item sm={5}>
             <Select
               native
               name='inputCountryCode'
@@ -66,7 +66,7 @@ const SearchWeather = () => {
               ))}
             </Select>
           </Grid>
-          <Grid item>
+          <Grid item sm={5}>
             <TextField
               name='inputCity'
               id='city'
@@ -77,7 +77,7 @@ const SearchWeather = () => {
               className={classes.inputs}
             />
           </Grid>
-          <Grid item>
+          <Grid item sm={2}>
             <Button
               type='submit'
               value='Buscar'

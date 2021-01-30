@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Grid, Paper, Modal } from "@material-ui/core";
+import { Typography, Grid, Paper, Modal, Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import DayModal from "./DayModal";
@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  centerItem: {
+    display: "flex",
+    justifyContent: "center",
+  },
 }));
 
 // Date converter
@@ -37,7 +41,7 @@ const DayFcast = ({ temp, weather, time, feel, humidity, pressure }) => {
   // cOnfig del modal de material ui
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
-  const [dayId, setDayId] = useState(null);
+  //const [dayId, setDayId] = useState(null);
 
   const classes = useStyles();
 
@@ -52,7 +56,7 @@ const DayFcast = ({ temp, weather, time, feel, humidity, pressure }) => {
       <Paper
         style={{ margin: "0.5rem 0", cursor: "pointer" }}
         onClick={() => {
-          setDayId(time);
+          //setDayId(time);
           handleOpen();
         }}
       >
@@ -64,35 +68,38 @@ const DayFcast = ({ temp, weather, time, feel, humidity, pressure }) => {
           justify='center'
           xs={12}
         >
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3}>
             <Typography variant='subtitle2' align='center'>
               {unixToDate(time)}
             </Typography>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={6} sm={3} className={classes.centerItem}>
             <img
               src={`https://openweathermap.org/img/wn/${weather[0].icon}@2x.png`}
               alt='Weather icon'
             />
           </Grid>
-          <Grid item xs={3}>
-            <Typography variant='subtitle2' align='center'>
-              {weather[0].description.charAt(0).toUpperCase() +
-                weather[0].description.slice(1)}
-            </Typography>
-          </Grid>
-
-          <Grid item xs={3}>
-            <Typography variant='h6' align='center'>
-              {temp.day} °C
-            </Typography>
-          </Grid>
+          <Box clone order={{ xs: 2, sm: 1 }}>
+            <Grid item xs={6} sm={3}>
+              <Typography variant='subtitle2' align='center'>
+                {weather[0].description.charAt(0).toUpperCase() +
+                  weather[0].description.slice(1)}
+              </Typography>
+            </Grid>
+          </Box>
+          <Box clone order={{ xs: 1, sm: 2 }}>
+            <Grid item xs={6} sm={3}>
+              <Typography variant='h6' align='center'>
+                {temp.day} °C
+              </Typography>
+            </Grid>
+          </Box>
         </Grid>
       </Paper>
       <Modal
         open={open}
         onClose={() => {
-          setDayId(null);
+          //setDayId(null);
           handleClose();
         }}
       >

@@ -24,10 +24,10 @@ function App() {
           <Location />
 
           <Grid container direction='row' spacing={6}>
-            <Grid item xs={6}>
+            <Grid item md={6}>
               <CurrentWeather />
             </Grid>
-            <Grid container item xs={6} justify='center' direction='column'>
+            <Grid container item md={6} justify='center' direction='column'>
               <DailyForecast />
             </Grid>
           </Grid>

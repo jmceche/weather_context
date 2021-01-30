@@ -6,6 +6,7 @@ import SearchWeather from "./SearchWeather";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    padding: ".5rem",
   },
   title: {
     flexGrow: 1,

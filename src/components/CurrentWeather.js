@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import {
+  Hidden,
   Grid,
   Typography,
   Table,
@@ -18,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
   },
   shadow: {
     background: "#dedede",
+  },
+  centerItem: {
+    display: "flex",
+    justifyContent: "flex-end",
   },
 }));
 
@@ -58,15 +63,21 @@ const CurrentWeather = () => {
             justify='center'
             alignItems='center'
           >
-            <Grid item>
+            <Grid item lg={4} md={4} sm={6} className={classes.centerItem}>
               <img
                 src={`http://openweathermap.org/img/wn/${weather[0].icon}@4x.png`}
                 alt='Weather icon'
               />
             </Grid>
-            <Divider orientation='vertical' flexItem />
-            <Grid item>
-              <Typography className={classes.separator} variant='h2'>
+            <Hidden mdDown>
+              <Divider orientation='vertical' flexItem />
+            </Hidden>
+            <Grid item lg={7} md={8} sm={6}>
+              <Typography
+                className={classes.separator}
+                variant='h2'
+                justify='center'
+              >
                 {main.temp} °C
               </Typography>
             </Grid>
@@ -77,6 +88,7 @@ const CurrentWeather = () => {
             justify='center'
             direction={"column"}
             alignItems='center'
+            xs={12}
           >
             <Typography variant='h4'>
               {weather[0].description.charAt(0).toUpperCase() +
