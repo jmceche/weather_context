@@ -59,7 +59,7 @@ const WeatherState = (props) => {
   // Get location info from user
   useEffect(() => {
     const getUserLocation = async () => {
-      const url = `https://geolocation-db.com/json/${process.env.REACT_APP_GEOLOCATION_DB_API}`;
+      const url = `http://api.ipstack.com/check?access_key=${process.env.REACT_APP_GEOLOCATION_API}`;
       const res = await fetch(url);
       const data = await res.json();
       dispatch({
