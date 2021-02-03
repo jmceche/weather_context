@@ -33,7 +33,7 @@ const WeatherState = (props) => {
       setLoading();
       try {
         let url;
-        if (lat && lon) {
+        if (cityName !== "") {
           url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`;
         } else {
           url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${country}&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`;
@@ -97,7 +97,7 @@ const WeatherState = (props) => {
     // if (city.length > 0) {
     // searchWeatherData(city, countryCode);
     if (lat && lon) {
-      searchWeatherData(lat, lon, city, countryCode);
+      searchWeatherData(city, countryCode, lat, lon);
     } else {
     }
   }, [lat, lon, city, countryCode, searchWeatherData]);
