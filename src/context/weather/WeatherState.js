@@ -34,7 +34,7 @@ const WeatherState = (props) => {
       try {
         let url;
         if (lat && lon) {
-          url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}}&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`;
+          url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`;
         } else {
           url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${country}&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`;
         }
