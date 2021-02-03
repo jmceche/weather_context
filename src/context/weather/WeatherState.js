@@ -20,17 +20,24 @@ const WeatherState = (props) => {
 
   const [state, dispatch] = useReducer(WeatherReducer, initialState);
 
-  const { city, countryCode } = state.userLocation;
+  const { city, countryCode, lat, lon } = state.userLocation;
+  //const { lat, lon } = state.userLocation;
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
 
   // Fetch Current Weather data from API, then use data to do a 2nd fetch
   const searchWeatherData = useCallback(
-    async (cityName, country) => {
+    async (cityName, country, lat, lon) => {
+      //async (lat, lon) => {
       setLoading();
       try {
-        const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${country}&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`;
+        let url;
+        if (lat && lon) {
+          url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}}&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`;
+        } else {
+          url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${country}&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`;
+        }
         const res = await fetch(url);
 
         if (res.ok) {
@@ -59,18 +66,27 @@ const WeatherState = (props) => {
   // Get location info from user
   useEffect(() => {
     const getUserLocation = async () => {
-      const url = `http://api.ipstack.com/check?access_key=${process.env.REACT_APP_GEOLOCATION_API}`;
-      const res = await fetch(url);
-      const data = await res.json();
-      dispatch({
-        type: GET_USER_LOCATION,
-        payload: {
-          countryName: data.country_name,
-          countryCode: data.country_code,
-          city: data.city,
-          lat: data.latitude,
-          lon: data.longitude,
-        },
+      // const url = `https://api.ipstack.com/check?access_key=${process.env.REACT_APP_GEOLOCATION_API}`;
+      // const res = await fetch(url);
+      // const data = await res.json();
+      // dispatch({
+      //   type: GET_USER_LOCATION,
+      //   payload: {
+      //     countryName: data.country_name,
+      //     countryCode: data.country_code,
+      //     city: data.city,
+      //     lat: data.latitude,
+      //     lon: data.longitude,
+      //   },
+      // });
+      navigator.geolocation.getCurrentPosition((pos) => {
+        dispatch({
+          type: GET_USER_LOCATION,
+          payload: {
+            lat: pos.coords.latitude,
+            lon: pos.coords.longitude,
+          },
+        });
       });
     };
     getUserLocation();
@@ -78,11 +94,14 @@ const WeatherState = (props) => {
 
   //Search weather from user location
   useEffect(() => {
-    if (city.length > 0) {
-      searchWeatherData(city, countryCode);
+    // if (city.length > 0) {
+    // searchWeatherData(city, countryCode);
+    if (lat && lon) {
+      searchWeatherData(lat, lon, city, countryCode);
     } else {
     }
-  }, [city, countryCode, searchWeatherData]);
+  }, [lat, lon, city, countryCode, searchWeatherData]);
+  // }, [city, countryCode, searchWeatherData]);
 
   // set Loading
   const setLoading = () => dispatch({ type: SET_LOADING });
