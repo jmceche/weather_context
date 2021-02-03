@@ -41,7 +41,7 @@ const SearchWeather = () => {
     if (inputCountryCode.trim() === "" || inputCity.trim() === "") {
       setAlert("Debes Llenar los campos", "warning");
     } else {
-      searchWeatherData(inputCity, inputCountryCode);
+      searchWeatherData(inputCity, inputCountryCode, null, null);
     }
   };
 

@@ -28,15 +28,15 @@ const WeatherState = (props) => {
 
   // Fetch Current Weather data from API, then use data to do a 2nd fetch
   const searchWeatherData = useCallback(
-    async (cityName, country, lat, lon) => {
+    async (cityName = "", country = "", lat = null, lon = null) => {
       //async (lat, lon) => {
       setLoading();
       try {
         let url;
-        if (cityName === "") {
-          url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`;
-        } else {
+        if (!lat || !lon) {
           url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${country}&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`;
+        } else {
+          url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.REACT_APP_OPENWEATHER_API}&units=metric&lang=es`;
         }
         const res = await fetch(url);
 
